@@ -92,10 +92,8 @@ pipeline {
                          docker login -u '${USER}' -p '${PASS}'
                          MAJ_VER=\$(echo ${params.PBM_VERSION} | awk -F "." '{print \$1}')
                          MIN_VER=\$(echo ${params.PBM_VERSION} | awk -F "-" '{print \$1}')
-                         docker tag percona-backup-mongodb perconalab/percona-backup-mongodb:\$MAJ_VER
-                         docker push perconalab/percona-backup-mongodb:\$MAJ_VER
-                         docker tag percona-backup-mongodb perconalab/percona-backup-mongodb:\$MIN_VER
-                         docker push perconalab/percona-backup-mongodb:\$MIN_VER 
+                         docker tag percona-backup-mongodb perconalab/percona-backup-mongodb:\$MIN_VER-test
+                         docker push perconalab/percona-backup-mongodb:\$MIN_VER-test
                      """
                 }
             }
