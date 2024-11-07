@@ -20,7 +20,7 @@
     parameters {
         choice(
             choices: ['ps_80', 'ps_84', 'ps_lts_innovation','client_test'],
-            description: 'Choose the product version to test: PS8.0 OR ps_lts_innovatoin',
+            description: 'Choose the product version to test: PS8.0 OR ps_lts_innovation',
             name: 'product_to_test'
         )
         choice(
@@ -29,7 +29,7 @@
             name: 'install_repo'
         )
         string(
-            defaultValue: 'https://github.com/panchal-yash/package-testing.git',
+            defaultValue: 'https://github.com/Percona-QA/package-testing.git',
             description: 'repo name',
             name: 'git_repo',
             trim: false
@@ -78,7 +78,7 @@
             stage('Checkout') {
                 steps {
                     deleteDir()
-                    git poll: false, branch: "master", url: "https://github.com/Percona-QA/package-testing.git"
+                    git poll: false, branch: "ps-pt-job-fix-1", url: "https://github.com/Percona-QA/package-testing.git"
                 }
             }
 
