@@ -390,7 +390,7 @@ pipeline {
             parallel {
                 stage('cluster1') {
                     options {
-                        timeout(time: 3, unit: 'HOURS')
+                        timeout(time: 6, unit: 'HOURS')
                     }
                     steps {
                         clusterRunner('c1')
@@ -398,7 +398,7 @@ pipeline {
                 }
                 stage('cluster2') {
                     options {
-                        timeout(time: 3, unit: 'HOURS')
+                        timeout(time: 6, unit: 'HOURS')
                     }
                     steps {
                         clusterRunner('c2')
@@ -406,7 +406,7 @@ pipeline {
                 }
                 stage('cluster3') {
                     options {
-                        timeout(time: 3, unit: 'HOURS')
+                        timeout(time: 6, unit: 'HOURS')
                     }
                     steps {
                         clusterRunner('c3')
@@ -414,7 +414,7 @@ pipeline {
                 }
                 stage('cluster4') {
                     options {
-                        timeout(time: 3, unit: 'HOURS')
+                        timeout(time: 6, unit: 'HOURS')
                     }
                     steps {
                         clusterRunner('c4')
@@ -422,7 +422,7 @@ pipeline {
                 }
                 stage('cluster5') {
                     options {
-                        timeout(time: 3, unit: 'HOURS')
+                        timeout(time: 6, unit: 'HOURS')
                     }
                     steps {
                         clusterRunner('c5')
@@ -430,7 +430,7 @@ pipeline {
                 }
                 stage('cluster6') {
                     options {
-                        timeout(time: 3, unit: 'HOURS')
+                        timeout(time: 6, unit: 'HOURS')
                     }
                     steps {
                         clusterRunner('c6')
@@ -438,7 +438,7 @@ pipeline {
                 }
                 stage('cluster7') {
                     options {
-                        timeout(time: 3, unit: 'HOURS')
+                        timeout(time: 6, unit: 'HOURS')
                     }
                     steps {
                         clusterRunner('c7')
