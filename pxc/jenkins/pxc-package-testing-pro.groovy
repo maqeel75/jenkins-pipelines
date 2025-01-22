@@ -134,7 +134,7 @@ def runMoleculeAction(String action, String product_to_test, String scenario, St
                     cd -
                 """
             }else{
-
+                withCredentials([usernamePassword(credentialsId: 'PS_PRIVATE_REPO_ACCESS', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                 sh"""
                     . virtenv/bin/activate
                     export MOLECULE_DEBUG=1
@@ -152,6 +152,7 @@ def runMoleculeAction(String action, String product_to_test, String scenario, St
                     molecule -e ${WORKSPACE}/${product_to_test}/${params.node_to_test}/${param_test_type}/envfile  ${action} -s ${scenario}
                     cd -
                 """
+                    }
             }
     }
 }
