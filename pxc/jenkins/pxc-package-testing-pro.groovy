@@ -29,9 +29,7 @@ def runMoleculeAction(String action, String product_to_test, String scenario, St
             """
 
             if(param_test_type == "install"){   
-                def install_repo="${test_repo}"
                 def check_version="${version_check}"
-                def pro="${pro}" 
 
                 if(action != "create" && action != "destroy"){
                     def IN_PXC1_IP = sh(
@@ -50,7 +48,7 @@ def runMoleculeAction(String action, String product_to_test, String scenario, St
                     ).trim()
 
                     sh """
-                        echo 'install_repo: "${install_repo}"' > "${WORKSPACE}/${product_to_test}/${params.node_to_test}/install/envfile"
+                        echo 'install_repo: "${test_repo}"' > "${WORKSPACE}/${product_to_test}/${params.node_to_test}/install/envfile"
                         echo 'check_version: "${check_version}"' >> "${WORKSPACE}/${product_to_test}/${params.node_to_test}/install/envfile"
                         echo 'pro: "${pro}"' >> "${WORKSPACE}/${product_to_test}/${params.node_to_test}/install/envfile"
                         echo 'PXC1_IP: "${IN_PXC1_IP}"' >> "${WORKSPACE}/${product_to_test}/${params.node_to_test}/install/envfile"
@@ -60,17 +58,14 @@ def runMoleculeAction(String action, String product_to_test, String scenario, St
                 }else{
                     echo "Not setting up VARS as in create or destroy stage"
                     sh """
-                        echo 'install_repo: "${install_repo}"' > "${WORKSPACE}/${product_to_test}/${params.node_to_test}/install/envfile"
+                        echo 'install_repo: "${test_repo}"' > "${WORKSPACE}/${product_to_test}/${params.node_to_test}/install/envfile"
                         echo 'check_version: "${check_version}"' >> "${WORKSPACE}/${product_to_test}/${params.node_to_test}/install/envfile"
                     """
                 }
             }else if(param_test_type == "min_upgrade"){
                     
-                def install_repo="${install_repo}"
                 def check_version="${version_check}"
                 def upgrade_repo="${test_repo}"
-
-                def pro="${pro}" 
 
                 if(action != "create" && action != "destroy"){
                     def UP_PXC1_IP = sh(
@@ -488,7 +483,7 @@ pipeline {
                                 allOf{
                                     expression{params.test_type == "min_upgrade_nonpro_pro" || params.test_type == "install_and_upgrade"}
                                     expression{params.test_repo != "main"}
-                                    expression{params.product_to_test == "pxc80"} || expression{params.product_to_test == "pxc84"}                
+                                    expression{params.product_to_test == "pxc80" || params.product_to_test == "pxc84"}                
                                 }
                             }
 
