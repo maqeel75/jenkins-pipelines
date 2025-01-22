@@ -111,8 +111,9 @@ def runMoleculeAction(String action, String product_to_test, String scenario, St
                     echo 'install_repo: "${install_repo}"' > "${WORKSPACE}/${product_to_test}/${params.node_to_test}/min_upgrade/envfile"
                     echo 'upgrade_repo: "${upgrade_repo}"' >> "${WORKSPACE}/${product_to_test}/${params.node_to_test}/min_upgrade/envfile"
                     """
-
                 }
+            }
+
 
     withCredentials(awsCredentials) {
 
@@ -159,6 +160,8 @@ def runMoleculeAction(String action, String product_to_test, String scenario, St
             }
     }
 }
+
+
 
 void setInventories(String param_test_type){
 
