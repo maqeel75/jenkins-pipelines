@@ -554,7 +554,7 @@ pipeline {
                 stage("MIN UPGRADE PXC 80/84 PRO_PRO" ) {
                             when {
                                 allOf{
-                                    expression{params.test_type == "min_upgrade" || params.test_type == "install_and_upgrade"}
+                                    expression{params.test_type == "min_upgrade_pro_pro" || params.test_type == "install_and_upgrade"}
                                     expression{params.test_repo != "main"}
                                     expression{params.product_to_test == "pxc80" || params.product_to_test == "pxc84"}
                                 }
@@ -629,7 +629,7 @@ pipeline {
                 stage("MIN UPGRADE PXC 80/84 PRO_NONPRO") {
                             when {
                                 allOf{
-                                    expression{params.test_type == "min_upgrade" || params.test_type == "install_and_upgrade"}
+                                    expression{params.test_type == "min_upgrade_pro_nonpro" || params.test_type == "install_and_upgrade"}
                                     expression{params.test_repo != "main"}
                                     expression{params.product_to_test == "pxc80" || params.product_to_test == "pxc84"}
                                 }
