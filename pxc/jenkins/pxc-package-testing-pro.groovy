@@ -521,7 +521,7 @@ pipeline {
                                     setInventories("min_upgrade")
                                     echo "2. Run Install scripts and tests for running PXC UPGRADE tests.. Molecule converge step"
                                         catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE'){
-                                            runMoleculeAction("converge", params.product_to_test, params.node_to_test, "min_upgrade", "main", "testing", "no")
+                                            runMoleculeAction("converge", params.product_to_test, params.node_to_test, "min_upgrade", "main", "testing", "no", "no")
                                         }
                                     echo "3. Run UPGRADE scripts and playbooks for running PXC UPGRADE tests.. Molecule side-effect step"
                                         catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE'){
