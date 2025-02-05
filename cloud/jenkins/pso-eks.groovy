@@ -53,8 +53,8 @@ void prepareSources() {
     """
 
     GIT_SHORT_COMMIT = sh(script: 'git -C source rev-parse --short HEAD', returnStdout: true).trim()
-    CLUSTER_NAME = sh(script: "echo jenkins-$JOB_NAME-$GIT_SHORT_COMMIT | tr '[:upper:]' '[:lower:]'", returnStdout: true).trim()
     PARAMS_HASH = sh(script: "echo $GIT_BRANCH-$GIT_SHORT_COMMIT-$PLATFORM_VER-$CLUSTER_WIDE-$IMAGE_OPERATOR-$IMAGE_MYSQL-$IMAGE_BACKUP-$IMAGE_ROUTER-$IMAGE_HAPROXY-$IMAGE_ORCHESTRATOR-$IMAGE_TOOLKIT-$IMAGE_PMM_CLIENT-$IMAGE_PMM_SERVER | md5sum | cut -d' ' -f1", returnStdout: true).trim()
+    CLUSTER_NAME = sh(script: "echo jenkins-$JOB_NAME-$GIT_SHORT_COMMIT | tr '[:upper:]' '[:lower:]'", returnStdout: true).trim()
 }
 
 void initParams() {
@@ -231,6 +231,7 @@ void runTest(Integer TEST_ID) {
     def testName = tests[TEST_ID]["name"]
     def clusterSuffix = tests[TEST_ID]["cluster"]
 
+    unstash "sourceFILES"
     waitUntil {
         def timeStart = new Date().getTime()
         try {
@@ -265,6 +266,7 @@ void runTest(Integer TEST_ID) {
             return true
         }
         catch (exc) {
+            echo "Error occurred while running test $testName: $exc"
             if (retryCount >= 1) {
                 currentBuild.result = 'FAILURE'
                 return true
@@ -423,7 +425,6 @@ pipeline {
                     agent { label 'docker' }
                     steps {
                         prepareAgent()
-                        unstash "sourceFILES"
                         clusterRunner('cluster1')
                     }
                     post { always { script { shutdownCluster('cluster1') } } }
@@ -432,7 +433,6 @@ pipeline {
                     agent { label 'docker' }
                     steps {
                         prepareAgent()
-                        unstash "sourceFILES"
                         clusterRunner('cluster2')
                     }
                     post { always { script { shutdownCluster('cluster2') } } }
@@ -441,7 +441,6 @@ pipeline {
                     agent { label 'docker' }
                     steps {
                         prepareAgent()
-                        unstash "sourceFILES"
                         clusterRunner('cluster3')
                     }
                     post { always { script { shutdownCluster('cluster3') } } }
@@ -450,7 +449,6 @@ pipeline {
                     agent { label 'docker' }
                     steps {
                         prepareAgent()
-                        unstash "sourceFILES"
                         clusterRunner('cluster4')
                     }
                     post { always { script { shutdownCluster('cluster4') } } }
@@ -470,11 +468,6 @@ pipeline {
                     slackSend channel: '#cloud-dev-ci', color: '#FF0000', message: "[$JOB_NAME]: build $currentBuild.result, $BUILD_URL"
                 }
             }
-
-            sh """
-                sudo docker system prune --volumes -af
-            """
-            deleteDir()
         }
     }
 }
